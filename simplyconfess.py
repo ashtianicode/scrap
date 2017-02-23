@@ -1,25 +1,16 @@
 # -*- coding: utf-8 -*-
-"""
-Spyder Editor
 
-This is a temporary script file.
-"""
-
-
-
-import requests
-
-url = "http://localhost:8080/web/post/submit/"
-
-
-
-print requests.post(url, data = {'text':'taha','mode':'d'})
 
 
 
 import requests
 import bs4
-categories =['other','a-dream','a-fantasy']
+import sys
+from random import randint
+reload(sys)
+sys.setdefaultencoding('utf-8')
+categories =[['o','other'],['d','a-dream'],['f','a-fantasy'],['fi','a-first-experience'],['g','a-guilt'],['l','a-lie'],['p','a-pain'],['q','a-question'],['r','a-random-feeling'],['t','a-truth'],['w','a-wild-experience']]
+url = "http://localhost:8080/web/post/submit/"
 
 
 
@@ -40,8 +31,11 @@ def gettexts(hyperlinks):
     return  paragraphes            
         
 
-for cat in categories :
-        categoryurl= cat
+for rand in range(1,1000) :
+        r = randint(0,10)
+        categoryurl= categories[r][1]
+        confessmode= categories[r][0]
+        print categoryurl,confessmode
         mainurl ="http://www.simplyconfess.com/category/"
         pages=[]
         firstpage = requests.get(mainurl+categoryurl)
@@ -56,24 +50,18 @@ for cat in categories :
              
         
         lastpage = pages[-2]
-        for i in range(1,int(lastpage)):
-            
-            
-                hyperlinks=[]
-                finalurl= mainurl+ categoryurl + "/page/" +str(i)
-                page= requests.get(finalurl)
-                soup =bs4.BeautifulSoup(page.content,"lxml")
-                links =soup.find_all("div",{"class":"entry-content hvr-grow"})
-                i= 0
-                for link in links  :
-                    i= i+1
-                    if i==3 :
-                        break
-                    hyperlinks.append( link['data-post-url'])
-                print len(hyperlinks)    
-                for pp in gettexts(hyperlinks)   :
+        hyperlinks=[]
+        finalurl= mainurl+ categoryurl + "/page/" +str(randint(0,int(lastpage)))
+        page= requests.get(finalurl)
+        soup =bs4.BeautifulSoup(page.content,"lxml")
+        links =soup.find_all("div",{"class":"entry-content hvr-grow"})
+        i= 0
+        link = links[0]  
+        hyperlinks.append( link['data-post-url'])
+        print len(hyperlinks)    
+        for pp in gettexts(hyperlinks)   :
                 
-                    requests.post(url, data = {'text':pp.encode('utf-8'),'mode':'d'})
+                    requests.post(url, data = {'text':pp.encode('utf-8'),'mode':confessmode})
 
 
                  
