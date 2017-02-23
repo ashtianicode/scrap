@@ -4,6 +4,19 @@ Spyder Editor
 
 This is a temporary script file.
 """
+
+
+
+import requests
+
+url = "http://localhost:8080/web/post/submit/"
+
+
+
+print requests.post(url, data = {'text':'taha','mode':'d'})
+
+
+
 import requests
 import bs4
 categories =['other','a-dream','a-fantasy']
@@ -54,12 +67,14 @@ for cat in categories :
                 i= 0
                 for link in links  :
                     i= i+1
-                    if i==21 :
+                    if i==3 :
                         break
                     hyperlinks.append( link['data-post-url'])
                 print len(hyperlinks)    
                 for pp in gettexts(hyperlinks)   :
-                    print pp
+                
+                    requests.post(url, data = {'text':pp.encode('utf-8'),'mode':'d'})
+
 
                  
                  
