@@ -4,10 +4,10 @@ import redis
 
 s = requests.session()
 
-login =s.get("http://poloto.ir/microzero/social/components/service/?login&<l u='admin' p='4693' k='true' ></l>")
+login =s.get("*****************")
 
 
-page= s.get('http://poloto.ir/portal/?clients')
+page= s.get('********************8')
 
 
 soup = bs4.BeautifulSoup(page.content,"lxml")
