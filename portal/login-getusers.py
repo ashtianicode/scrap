@@ -21,7 +21,7 @@ writer = csv.writer(out, delimiter=",")
 
 s = requests.session()
 
-r =s.get("http://poloto.ir/microzero/social/components/service/?login&<l u='admin' p='4693' k='true' ></l>")
+r =s.get("*************** ></l>")
 
 print r.text
 
@@ -34,7 +34,7 @@ for url in urls :
                      
                                    
                     
-                    userurl="http://poloto.ir/portal/?clients=view="+url
+                    userurl="**********8"+url
                     page=s.get(userurl)
                     soup = bs4.BeautifulSoup(page.content,"lxml")
                     a=b=c=d=e=f=''
