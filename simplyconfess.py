@@ -8,7 +8,12 @@ import requests
 import bs4
 categories =['other','a-dream','a-fantasy']
 
+
+
+
+
 def gettexts(hyperlinks):
+    paragraphes=[]
     for t in hyperlinks:
         page = requests.get(t)
         soup = bs4.BeautifulSoup(page.content,"lxml")
@@ -17,7 +22,9 @@ def gettexts(hyperlinks):
             paras =p.find_all("p")
             for para in paras :
                 paragraph = para.text
-                print paragraph
+                paragraphes.append(paragraph)
+                print len(paragraphes)
+    return  paragraphes            
         
 
 for cat in categories :
@@ -44,10 +51,15 @@ for cat in categories :
                 page= requests.get(finalurl)
                 soup =bs4.BeautifulSoup(page.content,"lxml")
                 links =soup.find_all("div",{"class":"entry-content hvr-grow"})
-                for link in links :
+                i= 0
+                for link in links  :
+                    i= i+1
+                    if i==21 :
+                        break
                     hyperlinks.append( link['data-post-url'])
-                    
-                gettexts(hyperlinks)    
+                print len(hyperlinks)    
+                for pp in gettexts(hyperlinks)   :
+                    print pp
 
                  
                  
